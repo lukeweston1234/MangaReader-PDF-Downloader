@@ -21,7 +21,6 @@ def prepare_link(link):
         link += "/1"
     return link
 
-
 def get_image(link, directory):
     """
     Function to get the given photos and write them
@@ -48,19 +47,16 @@ def get_image(link, directory):
                     f.write(image.content)
             counter += 1
 
-
 def create_folder():
     """
     Function to create a folder to place images in
     :return: A string indicating the path of the images folder:
     """
     current_location = os.getcwd()
-    image_directory = os.path.join(current_location, r'images')
+    image_directory = os.path.join(current_location, r'manga_reader_images')
     if not os.path.exists(image_directory):
         os.makedirs(image_directory)
     return image_directory
-
-
 
 def human_sort_key(str_arg):
     temp_str = ''
@@ -69,16 +65,13 @@ def human_sort_key(str_arg):
             temp_str += char
     return int(temp_str)
 
-
 def convert_to_pdf(directory, pdf_name):
     """
     :param directory: filepath(string) from the create_folder function
     :param pdf_name: desired name(string) of the PDF
     """
-    #get an image object for each file in the directory, sorted by the digits in the file
     file_list = [i for i in os.listdir(directory)]
-    for s in sorted(file_list, key=lambda s:human_sort_key(str(s))):
-        print(s)
+    #list of Image files, sorted by the numeric value of the file name
     image_list = [Image.open(directory + "\\" + f) for f in sorted(file_list, key=lambda s: human_sort_key(str(s)))]
     #creating first image for Pillow to write on
     img_1 = image_list.pop(0)
@@ -89,7 +82,6 @@ def convert_to_pdf(directory, pdf_name):
     #clean up jpeg files used in PDF creation
     clean_up(directory)
     print('\n')
-
 
 def clean_up(directory):
     '''
@@ -109,7 +101,7 @@ def main():
     folders while downloading can cause the PDF to be out of order.
     '''
     pdf_name = input("PDF Name: ") + ".pdf"
-    link = input("Enter a link: ")
+    link = input("Enter a link: ").lower()
     link = prepare_link(link)
     directory = create_folder()
     print("Downloading...")
@@ -119,5 +111,5 @@ def main():
     convert_to_pdf(directory, pdf_name)
     print("PDF Finished")
 
-
+    
 main()
