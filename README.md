@@ -1,4 +1,4 @@
-/// The manga reader website is no longer active
+# The manga reader website is no longer active
 
 
 This script can convert a number of jpegs for a series into a single PDF file.
